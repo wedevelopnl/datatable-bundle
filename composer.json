@@ -1,0 +1,31 @@
+{
+    "name": "webmen/datatable-bundle",
+    "description": "Symfony datatable",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.4",
+        "symfony/translation": "^5.0",
+        "symfony/options-resolver": "^5.0",
+        "symfony/http-foundation": "^5.0",
+        "symfony/http-kernel": "^5.0",
+        "symfony/dependency-injection": "^5.0",
+        "twig/twig": "^3.0",
+        "doctrine/orm": "^2.7"
+    },
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Rick",
+            "email": "rick@webmen.nl",
+            "homepage": "https://webmen.nl/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/thewebmen/datatable-bundle/issues"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webmen\\DataTableBundle\\": "src/"
+        }
+    }
+}

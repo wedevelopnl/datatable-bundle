@@ -1,0 +1,23 @@
+services:
+  Webmen\DataTableBundle\DataTableBuilder:
+    shared: false
+
+  Webmen\DataTableBundle\Column\:
+    resource: '@WebmenDataTableBundle/Column'
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Filter\:
+    resource: '@WebmenDataTableBundle/Filter'
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Type\:
+    resource: '@WebmenDataTableBundle/Type'
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Modal\:
+    resource: '@WebmenDataTableBundle/Modal'
+    shared: false
+    public: true
