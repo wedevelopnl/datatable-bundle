@@ -1,0 +1,97 @@
+.status-remark {
+  display: inline-flex;
+  flex-wrap: wrap;
+  margin-top: -4px;
+
+  span {
+    border-radius: 12px;
+    padding: 5px 12px;
+    margin: 4px 4px 0 0;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: top;
+    line-height: 1.2;
+  }
+}
+
+.items-per-page {
+  width: 50px;
+}
+
+.data-table-options {
+  display: none;
+  flex-wrap: wrap;
+  margin-bottom: $spacer;
+
+  &.active {
+    display: flex;
+  }
+}
+
+.table {
+  th {
+    white-space: nowrap;
+  }
+
+  &.b-table {
+    > thead {
+      > tr {
+        .table-b-table-default {
+          background-color: $gray-100;
+        }
+      }
+    }
+    > tbody {
+      > tr {
+        .table-b-table-default {
+          background-color: $gray-100 !important;
+        }
+
+        &:nth-child(odd) {
+          background-color: rgba(0, 0, 21, 0.05) !important;
+
+          &:hover {
+            .table-b-table-default {
+              background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05)) !important;
+            }
+          }
+        }
+
+        .actions {
+          text-align: center;
+          margin: 0 (-($spacer / 2));
+
+          a {
+            display: inline-block;
+            margin: $spacer / 2;
+          }
+        }
+      }
+    }
+  }
+}
+
+@include media-breakpoint-only(xs) {
+  .data-table-options {
+    margin-bottom: $spacer / 2;
+
+    > div {
+      margin-bottom: $spacer / 2;
+    }
+  }
+}
+
+.modal {
+  padding-left: 0;
+  overflow: hidden !important;
+
+  .modal-dialog {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .modal-header {
+    align-items: center;
+  }
+}
