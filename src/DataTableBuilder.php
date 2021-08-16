@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle;
 
-use Webmen\DataTableBundle\Column\ColumnTypeInterface;
-use Webmen\DataTableBundle\Column\TextType;
-use Webmen\DataTableBundle\Filter\FilterTypeInterface;
-use Webmen\DataTableBundle\Filter\RequiresQueryBuilderInterface;
-use Webmen\DataTableBundle\Modal\ModalTypeInterface;
 use Closure;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query\Expr\Select;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmen\DataTableBundle\Column\ColumnTypeInterface;
+use Webmen\DataTableBundle\Column\TextType;
+use Webmen\DataTableBundle\Filter\FilterTypeInterface;
+use Webmen\DataTableBundle\Filter\RequiresQueryBuilderInterface;
+use Webmen\DataTableBundle\Modal\ModalTypeInterface;
 
 final class DataTableBuilder
 {

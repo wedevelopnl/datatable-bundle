@@ -2,22 +2,44 @@ services:
   Webmen\DataTableBundle\DataTableBuilder:
     shared: false
 
-  Webmen\DataTableBundle\Column\:
-    resource: '@WebmenDataTableBundle/Column'
+  Webmen\DataTableBundle\DataTableFactory:
+    arguments:
+      - '@doctrine.orm.entity_manager'
+      - '@translator'
+      - '@service_container'
     shared: false
     public: true
 
-  Webmen\DataTableBundle\Filter\:
-    resource: '@WebmenDataTableBundle/Filter'
+  Webmen\DataTableBundle\Column\BoolType:
     shared: false
     public: true
 
-  Webmen\DataTableBundle\Type\:
-    resource: '@WebmenDataTableBundle/Type'
+  Webmen\DataTableBundle\Column\DateTimeType:
     shared: false
     public: true
 
-  Webmen\DataTableBundle\Modal\:
-    resource: '@WebmenDataTableBundle/Modal'
+  Webmen\DataTableBundle\Column\TextType:
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Column\TwigType:
+    arguments:
+      - '@twig'
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Filter\SimpleChoiceFilterType:
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Filter\SmartChoiceFilterType:
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Filter\TextFilterType:
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\Modal\DefaultModalType:
     shared: false
     public: true
