@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle\Filter;
 
-use Webmen\DataTableBundle\Column\ColumnTypeInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Webmen\DataTableBundle\Column\ColumnTypeInterface;
 
 abstract class AbstractType implements FilterTypeInterface
 {

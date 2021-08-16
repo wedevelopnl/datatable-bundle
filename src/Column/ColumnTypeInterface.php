@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle\Column;
 
-use Webmen\DataTableBundle\Filter\FilterTypeInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmen\DataTableBundle\Filter\FilterTypeInterface;
 
 interface ColumnTypeInterface
 {

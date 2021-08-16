@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle;
 
-use Webmen\DataTableBundle\Column\ColumnTypeInterface;
-use Webmen\DataTableBundle\Modal\ModalTypeInterface;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Webmen\DataTableBundle\Column\ColumnTypeInterface;
+use Webmen\DataTableBundle\Modal\ModalTypeInterface;
 
 final class DataTable
 {

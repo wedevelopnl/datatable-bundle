@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle\Filter;
 
-use Webmen\DataTableBundle\Column\ColumnTypeInterface;
 use Doctrine\ORM\QueryBuilder;
+use Webmen\DataTableBundle\Column\ColumnTypeInterface;
 
 interface FilterTypeInterface
 {
