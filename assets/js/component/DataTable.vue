@@ -53,7 +53,7 @@
                 <option v-for="value in field.filterOptions.choices">{{ value }}</option>
               </datalist>
             </template>
-            <template v-if="field.filterType === 'simple_choice'">
+            <template v-if="field.filterType === 'simple_choice' || field.filterType === 'bool'">
               <b-form-select v-model="filter[field.key]">
                 <b-form-select-option :value="null">{{ field.label }}</b-form-select-option>
                 <b-form-select-option v-for="(value, key) in field.filterOptions.choices" :key="key" :value="key">{{ value }}</b-form-select-option>
@@ -63,7 +63,7 @@
         </b-td>
       </template>
       <template #cell()="data">
-        <template v-if="data.field.type === 'twig'">
+        <template v-if="data.field.type === 'twig' || data.field.type === 'bool'">
           <div v-html="data.value"></div>
         </template>
         <template v-else>
@@ -194,7 +194,7 @@ export default {
     },
     onFiltered(filteredItems) {
       this.$nextTick(() => {
-          this.addModalListeners(this.config.modals, filteredItems);
+        this.addModalListeners(this.config.modals, filteredItems);
       })
     },
     addModalListeners(modals, filteredItems) {

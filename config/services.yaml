@@ -28,6 +28,12 @@ services:
     shared: false
     public: true
 
+  Webmen\DataTableBundle\Filter\BoolFilterType:
+    arguments:
+      - '@translator'
+    shared: false
+    public: true
+
   Webmen\DataTableBundle\Filter\SimpleChoiceFilterType:
     shared: false
     public: true
@@ -41,5 +47,8 @@ services:
     public: true
 
   Webmen\DataTableBundle\Modal\DefaultModalType:
+    arguments:
+      - '@twig'
+      - '@translator'
     shared: false
     public: true

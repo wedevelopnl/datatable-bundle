@@ -99,16 +99,22 @@ abstract class AbstractType implements ColumnTypeInterface
             return $row[$this->column];
         }
 
-        if (is_object($row)) {
-            $propertyPathParts = explode('.', $this->config['propertyPath']);
+        if (!is_object($row)) {
+            return '';
+        }
+
+        $propertyPathParts = explode('.', $this->config['propertyPath']);
+        $propertyPathPart = array_shift($propertyPathParts);
+
+        // Ignore default entity alias, this probably needs a cleaner solution in the future.
+        if ($propertyPathPart === $this->entityAlias) {
             $propertyPathPart = array_shift($propertyPathParts);
+        }
 
-            // Ignore default entity alias, this probably needs a cleaner solution in the future.
-            if ($propertyPathPart === $this->entityAlias) {
-                $propertyPathPart = array_shift($propertyPathParts);
-            }
-
+        if (method_exists($row, 'get' . $propertyPathPart)) {
             return $this->getObjectValue($row, $propertyPathPart, $propertyPathParts);
+        } elseif (method_exists($row, 'is' . $propertyPathPart)) {
+            return $this->isObjectValue($row, $propertyPathPart, $propertyPathParts);
         }
 
         return '';
@@ -126,6 +132,26 @@ abstract class AbstractType implements ColumnTypeInterface
         }
 
         $value = $row->{'get' . $property}();
+
+        if (count($remainingPath) > 0 && is_object($value)) {
+            return $this->getObjectValue($value, array_shift($remainingPath), $remainingPath);
+        }
+
+        return $value;
+    }
+
+    /**
+     * @param array<string> $remainingPath
+     *
+     * @return mixed
+     */
+    private function isObjectValue(object $row, string $property, array $remainingPath)
+    {
+        if (!method_exists($row, 'is' . $property)) {
+            return '';
+        }
+
+        $value = $row->{'is' . $property}();
 
         if (count($remainingPath) > 0 && is_object($value)) {
             return $this->getObjectValue($value, array_shift($remainingPath), $remainingPath);

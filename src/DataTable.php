@@ -91,7 +91,9 @@ final class DataTable
         $filter = [];
 
         if ($request->query->has('filter')) {
-            $filter = array_filter(json_decode($request->query->get('filter'), true));
+            $filter = array_filter(json_decode($request->query->get('filter'), true), function($value) {
+                return $value !== null;
+            });
         }
 
         foreach ($filter as $key => $value) {
