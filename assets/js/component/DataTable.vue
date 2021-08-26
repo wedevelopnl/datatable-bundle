@@ -137,6 +137,9 @@ export default {
     },
   },
   created() {
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const queryParameters = Object.fromEntries(urlSearchParams.entries());
+
     this.name = this.config.name;
     this.columns = this.config.columns;
 
@@ -145,7 +148,7 @@ export default {
 
     for (const column of this.columns) {
       if (column.filterable) {
-        this.$set(this.filter, column.key, null);
+        this.$set(this.filter, column.key, queryParameters[column.key] ? queryParameters[column.key] : null);
       }
 
       if (!Object.keys(preferences.visibleColumns).includes(column.key)) {
