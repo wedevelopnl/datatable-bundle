@@ -14,6 +14,9 @@
         "symfony/twig-bundle": "^5.0",
         "symfony/config": "^5.0"
     },
+    "suggest": {
+        "symfony/webpack-encore-bundle": "To manage the building and creating of your frontend files"
+    },
     "license": "BSD-3-Clause",
     "authors": [
         {
