@@ -29,6 +29,9 @@ final class DataTable
     private Response $response;
     private TranslatorInterface $translator;
 
+    private string $export;
+    private ?DataTableExportInterface $exportAdapter;
+
     /**
      * @param array<string,ColumnTypeInterface> $columns
      * @param array<string, ModalTypeInterface> $modals
@@ -40,7 +43,8 @@ final class DataTable
         QueryBuilder $queryBuilder,
         ?string $sortColumn,
         ?string $sortDirection,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        ?DataTableExportInterface $exportAdapter
     ) {
         $this->name = $name;
         $this->columns = $columns;
@@ -49,6 +53,7 @@ final class DataTable
         $this->sortColumn = $sortColumn;
         $this->sortDirection = $sortDirection;
         $this->translator = $translator;
+        $this->exportAdapter = $exportAdapter;
     }
 
     /**
@@ -68,6 +73,10 @@ final class DataTable
 
         return [
             'name' => $this->name,
+            'isExportable' => $this->isExportable(),
+            'exportTableText' => $this->translator->trans('datatable.export_table'),
+            'exportSuccessTitle' => $this->translator->trans('datatable.export.success_title'),
+            'exportSuccessBody' => $this->translator->trans('datatable.export.success_body'),
             'noResultsText' => $this->translator->trans('datatable.no_results'),
             'resultsPerPageText' => $this->translator->trans('datatable.results_per_page'),
             'apiUrl' => $apiUrl,
@@ -115,6 +124,12 @@ final class DataTable
             $queryBuilder->orderBy($this->columns[$this->sortColumn]->getPropertyPath(), $this->sortDirection ?? 'ASC');
         }
 
+        if ($request->query->has('dataTableExport') && $this->isExportable()) {
+            $this->export = $this->exportAdapter->export($queryBuilder, $request, $this->name, $this->columns);
+
+            return;
+        }
+
         $pageSize = (int)$request->query->get('size');
         $page = (int)$request->query->get('page');
 
@@ -142,6 +157,16 @@ final class DataTable
         return $this->response;
     }
 
+    public function hasExport(): bool
+    {
+        return isset($this->export);
+    }
+
+    public function getExport(): string
+    {
+        return $this->export;
+    }
+
     /**
      * @return array<string, array|string|bool|int|null>
      */
@@ -157,5 +182,10 @@ final class DataTable
         }
 
         return $data;
+    }
+
+    private function isExportable(): bool
+    {
+        return $this->exportAdapter instanceof DataTableExportInterface && $this->exportAdapter->canExport();
     }
 }

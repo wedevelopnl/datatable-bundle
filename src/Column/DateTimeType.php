@@ -30,6 +30,11 @@ final class DateTimeType extends AbstractType
         return 'date_time';
     }
 
+    public function isExportable(): bool
+    {
+        return true;
+    }
+
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([

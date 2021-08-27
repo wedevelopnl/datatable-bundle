@@ -15,4 +15,9 @@ final class TextType extends AbstractType
     {
         return 'text';
     }
+
+    public function isExportable(): bool
+    {
+        return true;
+    }
 }
