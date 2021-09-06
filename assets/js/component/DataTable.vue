@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="position-relative">
     <div class="d-flex flex-wrap align-items-center">
       <div class="d-flex align-items-center flex-shrink-0 mb-3">
         <b-form-select v-model="perPage" size="sm" class="form-control form-control-sm flex-shrink-0 items-per-page">
@@ -27,6 +27,7 @@
     </div>
     <b-table
         ref="table"
+        primary-key="id"
         striped
         hover
         no-local-sorting
@@ -43,15 +44,8 @@
         :per-page="perPage"
         :sort-by.sync="sortBy"
         :sort-desc.sync="sortDesc"
-        :busy="isLoading"
         @filtered="onFiltered"
     >
-      <template #table-busy>
-        <div class="text-center text-danger my-2">
-          <b-spinner class="align-middle"></b-spinner>
-          <strong>Loading...</strong>
-        </div>
-      </template>
       <template slot="top-row" slot-scope="{ fields }">
         <b-td v-for="field in fields" :key="field.key" :sticky-column="field.stickyColumn">
           <template v-if="field.filterable">
@@ -111,24 +105,39 @@
         v-model="allModals[index].selected"/>
     <b-modal ref="export-modal" id="export-modal" :title=config.exportSuccessTitle>
       <p class="my-4">{{ config.exportSuccessBody }}</p>
-      <template #modal-footer="{ ok, cancel, hide }">
+      <template #modal-footer="{ ok }" ok-only>
         <b-button variant="primary" @click="ok">
           Ok
         </b-button>
       </template>
     </b-modal>
+    <Loading :fullScreen="false" v-model="isLoading" />
   </div>
 </template>
 
 <script>
 import {BFormCheckbox, BFormInput, BFormSelect, BFormSelectOption, BPagination, BTable, BTd, BModal, BSpinner, BButton} from "bootstrap-vue";
 import Modal from './Modal.vue'
+import Loading from "./Loading";
 import axios from "axios";
 
 export default {
   name: 'DataTable',
   props: ['config'],
-  components: {BTable, BTd, BPagination, BFormInput, BFormSelect, BFormSelectOption, BFormCheckbox, BModal, BSpinner, BButton, Modal},
+  components: {
+    BTable,
+    BTd,
+    BPagination,
+    BFormInput,
+    BFormSelect,
+    BFormSelectOption,
+    BFormCheckbox,
+    BModal,
+    BSpinner,
+    BButton,
+    Modal,
+    Loading
+  },
   data() {
     return {
       name: null,
@@ -219,6 +228,7 @@ export default {
       }
     },
     onFiltered(filteredItems) {
+      this.isLoading = false;
       this.$nextTick(() => {
         this.addModalListeners(this.config.modals, filteredItems);
       })

@@ -24,6 +24,7 @@
 import {BButton, BIcon, BModal} from 'bootstrap-vue'
 
 export default {
+  name: 'Modal',
   components: {
     BModal,
     BButton,
@@ -59,7 +60,6 @@ export default {
       default: ''
     }
   },
-  name: 'Modal',
   data () {
     return {
       modalState: this.modal
