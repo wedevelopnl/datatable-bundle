@@ -3,3 +3,7 @@ datatable:
   results_per_page: results per page
   true_label: true
   false_label: false
+  export_table: Export table
+  export:
+    success_title: Export successful
+    success_body: Export is created and will be send via email

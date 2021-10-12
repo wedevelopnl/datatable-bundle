@@ -3,3 +3,7 @@ datatable:
   results_per_page: resultaten per pagina
   true_label: waar
   false_label: onwaar
+  export_table: Export tabel
+  export:
+    success_title: Export is succesvol
+    success_body: Export is aangemaakt en zal via email verstuurd worden

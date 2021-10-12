@@ -19,4 +19,9 @@ final class BoolType extends AbstractType
 
         return '<i class="fa fa-times"></i>';
     }
+
+    public function isExportable(): bool
+    {
+        return true;
+    }
 }
