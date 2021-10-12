@@ -28,6 +28,8 @@ interface ColumnTypeInterface
 
     public function isFilterable(): bool;
 
+    public function isExportable(): bool;
+
     /**
      * @param array<string, mixed>|object $row
      */

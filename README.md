@@ -27,5 +27,8 @@ Import the SCSS styling in your own entry file
 
 Now you should be able to use this bundle in your symfony application
 
+## Export
+An export interface is provided to have some clue as how to export a datatable.
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

@@ -27,6 +27,7 @@ final class DataTableBuilder
     private ?string $sortColumn = null;
     private ?string $sortDirection = null;
     private ContainerInterface $container;
+    private ?DataTableExportInterface $exportAdapter = null;
 
     public function __construct(ContainerInterface $container)
     {
@@ -128,6 +129,13 @@ final class DataTableBuilder
         return $this;
     }
 
+    public function exportAdapter(DataTableExportInterface $exportAdapter): self
+    {
+        $this->exportAdapter = $exportAdapter;
+
+        return $this;
+    }
+
     public function createDataTable(EntityManagerInterface $entityManager, TranslatorInterface $translator): DataTable
     {
         if (empty($this->name)) {
@@ -159,7 +167,8 @@ final class DataTableBuilder
             $queryBuilder,
             $this->sortColumn,
             $this->sortDirection,
-            $translator
+            $translator,
+            $this->exportAdapter
         );
     }
 

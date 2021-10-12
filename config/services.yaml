@@ -1,3 +1,5 @@
+parameters:
+  export_datatable_directory: '%kernel.project_dir%/files/export-datatable'
 services:
   Webmen\DataTableBundle\DataTableBuilder:
     shared: false
@@ -7,6 +9,14 @@ services:
       - '@doctrine.orm.entity_manager'
       - '@translator'
       - '@service_container'
+    shared: false
+    public: true
+
+  Webmen\DataTableBundle\DataTableExportAdapter:
+    arguments:
+      - '@translator'
+      - '@security.helper'
+      - '%export_datatable_directory%'
     shared: false
     public: true
 

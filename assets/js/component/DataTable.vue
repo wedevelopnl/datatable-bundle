@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="position-relative">
     <div class="d-flex flex-wrap align-items-center">
       <div class="d-flex align-items-center flex-shrink-0 mb-3">
         <b-form-select v-model="perPage" size="sm" class="form-control form-control-sm flex-shrink-0 items-per-page">
@@ -14,6 +14,11 @@
           <i class="far fa-cog fa-fw"></i>
         </a>
       </div>
+      <div class="d-flex align-items-center mb-3 ml-2 mr-2" v-if="this.isExportable">
+        <a href="#" class="font-lg data-table-export" v-on:click="exportTable" :title=config.exportTableText>
+          <i class="fas fa-download"></i>
+        </a>
+      </div>
       <div class="data-table-options" :class="{active: showOptions}">
         <b-form-checkbox v-for="column in this.columns" v-if="column.label.length" v-model="visibleColumns[column.key]" :key="column.key" :disabled="visibleColumns.length === 1 && column.visible" inline>
           {{ column.label }}
@@ -22,6 +27,7 @@
     </div>
     <b-table
         ref="table"
+        primary-key="id"
         striped
         hover
         no-local-sorting
@@ -97,21 +103,46 @@
         :confirmUrl="confirmUrl"
         :buttons="modal.buttons"
         v-model="allModals[index].selected"/>
+    <b-modal ref="export-modal" id="export-modal" :title=config.exportSuccessTitle>
+      <p class="my-4">{{ config.exportSuccessBody }}</p>
+      <template #modal-footer="{ ok }" ok-only>
+        <b-button variant="primary" @click="ok">
+          Ok
+        </b-button>
+      </template>
+    </b-modal>
+    <Loading :fullScreen="false" v-model="isLoading" />
   </div>
 </template>
 
 <script>
-import {BFormCheckbox, BFormInput, BFormSelect, BFormSelectOption, BPagination, BTable, BTd} from "bootstrap-vue";
+import {BFormCheckbox, BFormInput, BFormSelect, BFormSelectOption, BPagination, BTable, BTd, BModal, BSpinner, BButton} from "bootstrap-vue";
 import Modal from './Modal.vue'
+import Loading from "./Loading";
 import axios from "axios";
 
 export default {
   name: 'DataTable',
   props: ['config'],
-  components: {BTable, BTd, BPagination, BFormInput, BFormSelect, BFormSelectOption, BFormCheckbox, Modal},
+  components: {
+    BTable,
+    BTd,
+    BPagination,
+    BFormInput,
+    BFormSelect,
+    BFormSelectOption,
+    BFormCheckbox,
+    BModal,
+    BSpinner,
+    BButton,
+    Modal,
+    Loading
+  },
   data() {
     return {
       name: null,
+      isExportable: false,
+      isLoading: false,
       columns: [],
       visibleColumns: {},
       currentPage: 1,
@@ -141,6 +172,7 @@ export default {
     const queryParameters = Object.fromEntries(urlSearchParams.entries());
 
     this.name = this.config.name;
+    this.isExportable = this.config.isExportable;
     this.columns = this.config.columns;
 
     const preferences = this.getPreferences();
@@ -196,6 +228,7 @@ export default {
       }
     },
     onFiltered(filteredItems) {
+      this.isLoading = false;
       this.$nextTick(() => {
         this.addModalListeners(this.config.modals, filteredItems);
       })
@@ -260,6 +293,24 @@ export default {
 
     setPreferences(preferences) {
       localStorage[`DataTable_${this.name}`] = JSON.stringify(preferences);
+    },
+
+    exportTable() {
+      this.isLoading = true;
+      axios.post(this.config.apiUrl, {
+        dataTableExport: true,
+        dataTable: this.name,
+        filter: JSON.stringify(this.filter),
+        columns: JSON.stringify(this.visibleColumns),
+        sortBy: this.sortBy ?? '',
+        sortDirection: this.sortDesc ? 'DESC' : 'ASC'
+      }).then(response => {
+        this.$refs['export-modal'].show()
+        this.isLoading = false;
+        return response;
+      }).catch(() => {
+        this.isLoading = false;
+      });
     }
   }
 }

@@ -36,6 +36,11 @@ final class TwigType extends AbstractType
         return 'twig';
     }
 
+    public function isExportable(): bool
+    {
+        return false;
+    }
+
     /**
      * @param mixed $row
      *
