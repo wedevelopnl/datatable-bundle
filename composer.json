@@ -6,14 +6,14 @@
         "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
         "openspout/openspout": "^3.3",
-        "symfony/translation": "^5.0",
-        "symfony/options-resolver": "^5.0",
-        "symfony/http-foundation": "^5.0",
-        "symfony/http-kernel": "^5.0",
-        "symfony/dependency-injection": "^5.0",
+        "symfony/translation": "^6.0",
+        "symfony/options-resolver": "^6.0",
+        "symfony/http-foundation": "^6.0",
+        "symfony/http-kernel": "^6.0",
+        "symfony/dependency-injection": "^6.0",
         "doctrine/orm": "^2.7",
-        "symfony/twig-bundle": "^5.0",
-        "symfony/config": "^5.0"
+        "symfony/twig-bundle": "^6.0",
+        "symfony/config": "^6.0"
     },
     "suggest": {
         "symfony/webpack-encore-bundle": "To manage the building and creating of your frontend files"
