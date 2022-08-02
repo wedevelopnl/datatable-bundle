@@ -3,7 +3,7 @@
     "description": "Symfony datatable",
     "type": "symfony-bundle",
     "require": {
-        "php": "^7.4",
+        "php": "~7.4.0 || ~8.0.0 || ~8.1.0",
         "ext-json": "*",
         "openspout/openspout": "^3.3",
         "symfony/translation": "^5.0",
