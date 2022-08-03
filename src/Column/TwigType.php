@@ -21,11 +21,23 @@ final class TwigType extends AbstractType
         return $this->twig->render($this->config['template'], ['row' => $row] + $this->getVariables($row));
     }
 
+    public function getExportValue($row): string
+    {
+        $exportValue = $this->config['exportValue'];
+
+        if (!is_callable($exportValue)) {
+            throw new \LogicException('Invalid config exportValue, must be callable.');
+        }
+
+        return (string)$exportValue($row);
+    }
+
     protected function configureOptions(OptionsResolver $optionsResolver): void
     {
         $optionsResolver->setDefaults([
             'template' => '',
             'variables' => [],
+            'exportValue' => null,
         ]);
 
         parent::configureOptions($optionsResolver);
@@ -38,7 +50,7 @@ final class TwigType extends AbstractType
 
     public function isExportable(): bool
     {
-        return false;
+        return $this->config['exportValue'] !== null;
     }
 
     /**
