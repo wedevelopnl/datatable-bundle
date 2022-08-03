@@ -36,6 +36,11 @@ interface ColumnTypeInterface
     public function getValue($row): string;
 
     /**
+     * @param array<string, mixed>|object $row
+     */
+    public function getExportValue($row): string;
+
+    /**
      * @return array<string, array|string|bool|int|null>
      */
     public function getFrontendConfiguration(TranslatorInterface $translator): array;
