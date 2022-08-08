@@ -105,7 +105,7 @@ final class DataTableExportAdapter implements DataTableExportInterface
     {
         $data = [];
         foreach ($this->columns as $columnType) {
-            $value = $columnType->getValue($row);
+            $value = $columnType->getExportValue($row);
             $data[] = $value;
         }
 

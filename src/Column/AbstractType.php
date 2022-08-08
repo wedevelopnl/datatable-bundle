@@ -172,4 +172,9 @@ abstract class AbstractType implements ColumnTypeInterface
             'filter' => null,
         ]);
     }
+
+    public function getExportValue($row): string
+    {
+        return $this->getValue($row);
+    }
 }
