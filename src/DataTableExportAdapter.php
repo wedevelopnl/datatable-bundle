@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Webmen\DataTableBundle;
 
 use OpenSpout\Common\Entity\Row;
-use OpenSpout\Writer\Common\Creator\WriterEntityFactory;
 use Doctrine\ORM\QueryBuilder;
 use OpenSpout\Writer\XLSX\Writer;
 use Symfony\Component\HttpFoundation\Request;
