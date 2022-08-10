@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Webmen\DataTableBundle;
 
-use Box\Spout\Writer\Common\Creator\WriterEntityFactory;
+use OpenSpout\Common\Entity\Row;
 use Doctrine\ORM\QueryBuilder;
+use OpenSpout\Writer\XLSX\Writer;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -50,14 +51,14 @@ final class DataTableExportAdapter implements DataTableExportInterface
         $filename = sprintf('%s-%s', (new \DateTime())->format('YmdHis'), $dataTableName);
         $fullName = sprintf('%s/%s.xlsx', $this->exportDatatableDirectory, $filename);
 
-        $writer = WriterEntityFactory::createXLSXWriter();
+        $writer = new Writer();
         $writer->openToFile($fullName);
 
-        $singleRow = WriterEntityFactory::createRowFromArray($this->getHeaders());
+        $singleRow = Row::fromValues($this->getHeaders());
         $writer->addRow($singleRow);
 
         foreach ($queryBuilder->getQuery()->toIterable() as $row) {
-            $singleRow = WriterEntityFactory::createRowFromArray($this->serializeExport($row));
+            $singleRow = Row::fromValues($this->serializeExport($row));
             $writer->addRow($singleRow);
         }
         $writer->close();
