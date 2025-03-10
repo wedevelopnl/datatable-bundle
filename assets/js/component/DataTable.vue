@@ -46,7 +46,7 @@
         :sort-desc.sync="sortDesc"
         @filtered="onFiltered"
     >
-      <template slot="top-row" slot-scope="{ fields }">
+      <template v-if="hasFilterableColumns" slot="top-row" slot-scope="{ fields }">
         <b-td v-for="field in fields" :key="field.key" :sticky-column="field.stickyColumn">
           <template v-if="field.filterable">
             <template v-if="field.filterType === 'text'">
@@ -193,6 +193,14 @@ export default {
   computed: {
     onlyVisibleColumns() {
       return this.columns.filter(column => this.visibleColumns[column.key]);
+    },
+
+    hasFilterableColumns() {
+      if (!this.columns) {
+        return false;
+      }
+
+      return this.columns.some(column => column.filterable);
     }
   },
   methods: {
@@ -312,6 +320,6 @@ export default {
         this.isLoading = false;
       });
     }
-  }
+  },
 }
 </script>
